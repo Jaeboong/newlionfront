@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import api from '../services/api';
 
 function Login({ onLogin, onSwitchToRegister }) {
   const [id, setId] = useState('');
@@ -40,13 +41,7 @@ function Login({ onLogin, onSwitchToRegister }) {
     setError('');
     
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ id, pwd }),
-      });
+      const response = await api.auth.login({ id, pwd });
       
       const data = await response.json();
       console.log('로그인 응답:', data);

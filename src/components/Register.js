@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import api from '../services/api';
 
 function Register({ onRegisterSuccess, onSwitchToLogin }) {
   const [id, setId] = useState('');
@@ -54,16 +55,10 @@ function Register({ onRegisterSuccess, onSwitchToLogin }) {
     setError('');
     
     try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          id,
-          pwd,
-          nickname
-        }),
+      const response = await api.auth.register({
+        id,
+        pwd,
+        nickname
       });
       
       const data = await response.json();

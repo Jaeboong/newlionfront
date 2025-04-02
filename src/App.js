@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Home from './components/Home';
 import ErrorBoundary from './components/ErrorBoundary';
+import api from './services/api';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,12 +24,7 @@ function App() {
           return;
         }
         
-        const response = await fetch('/api/verify-token', {
-          method: 'GET',
-          headers: {
-            'access': token
-          }
-        });
+        const response = await api.auth.verifyToken();
         
         if (response.ok) {
           const data = await response.json();
@@ -77,17 +73,8 @@ function App() {
   
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem('authToken');
-      
-      // 서버에 로그아웃 요청
-      if (token) {
-        await fetch('/api/logout', {
-          method: 'POST',
-          headers: {
-            'access': token
-          }
-        });
-      }
+      await api.auth.logout();
+      console.log('로그아웃 요청 성공');
     } catch (error) {
       console.error('로그아웃 중 오류 발생:', error);
     } finally {

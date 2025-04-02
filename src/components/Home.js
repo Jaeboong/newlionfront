@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
 import ErrorBoundary from './ErrorBoundary';
+import api from '../services/api';
 
 function Home({ user, onLogout }) {
   const [isLoading, setIsLoading] = useState(false);
+  
+  useEffect(() => {
+    console.log("Home 컴포넌트 마운트, 유저 정보:", user);
+  }, [user]);
 
   const handleLogout = async () => {
     setIsLoading(true);
     
     try {
-      await fetch('api/logout', {
-        method: 'POST',
-        headers: {
-          'access': `${localStorage.getItem('authToken')}`
-        }
-      });
-      
+      await api.auth.logout();
+      console.log("로그아웃 요청 성공");
       onLogout();
     } catch (error) {
       console.error('로그아웃 중 오류 발생:', error);
@@ -24,6 +24,7 @@ function Home({ user, onLogout }) {
   };
 
   if (!user) {
+    console.log("사용자 정보가 없음");
     return <div>로그인이 필요합니다.</div>;
   }
 

@@ -132,10 +132,4 @@ function App() {
   );
 }
 
-const App = () => {
-  return (
-    <h1>GitHub Pages 배포 테스트</h1>
-  )
-}
-
 export default App;

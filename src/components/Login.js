@@ -51,13 +51,19 @@ function Login({ onLogin, onSwitchToRegister }) {
         return;
       }
       
+      // 모든 응답 헤더 확인 (디버깅용)
+      console.log('응답 헤더:');
+      response.headers.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+      
       // access 헤더에서 토큰 추출
       const token = response.headers.get('access');
       console.log('받은 토큰:', token);
       
       // 토큰이 없는 경우
       if (!token) {
-        setError('인증 토큰을 받지 못했습니다.');
+        setError('인증 토큰을 받지 못했습니다. 백엔드 서버 CORS 설정을 확인하세요.');
         return;
       }
       
@@ -102,7 +108,7 @@ function Login({ onLogin, onSwitchToRegister }) {
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="id">아이디</label>
+          <label htmlFor="id">아이디 (4~20자)</label>
           <input
             type="text"
             id="id"
@@ -113,7 +119,7 @@ function Login({ onLogin, onSwitchToRegister }) {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="pwd">비밀번호</label>
+          <label htmlFor="pwd">비밀번호 (8자 이상)</label>
           <input
             type="password"
             id="pwd"

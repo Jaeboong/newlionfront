@@ -7,7 +7,7 @@
 // 로컬 개발 환경에서는 프록시 설정 사용
 // 배포 환경에서는 실제 백엔드 서버 URL 사용
 const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://1.247.204.214:5000' // 배포 환경에서 로컬 백엔드 서버 URL로 변경
+  ? 'https://mongdangbul.store:5000' // 배포 환경에서 로컬 백엔드 서버 URL로 변경
   : ''; // 개발 환경에서는 프록시 설정 사용
 
 // 기본 fetch 옵션
